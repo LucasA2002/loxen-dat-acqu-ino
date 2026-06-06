@@ -58,7 +58,7 @@ const serial = async (
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR && SensorBloqueio == 1) {
 
-            // este insert irá inserir os dados na tabela "medida"
+            // este insert irá inserir os dados na tabela "monitoramento"
             await poolBancoDados.execute(
                 'INSERT INTO monitoramento (fkSensor) VALUES (1)',
                 [SensorBloqueio]
