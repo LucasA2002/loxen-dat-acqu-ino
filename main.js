@@ -58,13 +58,28 @@ const serial = async (
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR && SensorBloqueio == 1) {
 
-            // este insert irá inserir os dados na tabela "monitoramento"
-            await poolBancoDados.execute(
-                'INSERT INTO monitoramento (fkSensor) VALUES (1)',
-                [SensorBloqueio]
-            );
-            console.log("valores inseridos no banco: ", + SensorBloqueio);
+            // lista com os ids da simulação dos sensores
+            let idsSorteados = [];
 
+            while (idsSorteados.length < 6) {
+                let id = Math.floor(Math.random() * 12) + 1;
+
+                if (idsSorteados.indexOf(id) == -1) {
+                    idsSorteados.push(id);
+                }
+            }
+
+            // k itera pela lista dos ids sorteados
+            for (let k = 0 ; k < idsSorteados.length ; k++) {
+                // este insert irá inserir os dados na tabela "monitoramento"
+                await poolBancoDados.execute(
+                    'INSERT INTO monitoramento (fkSensor) VALUES (?)',
+                    [idsSorteados[k]]
+                );
+                console.log("valores inseridos no banco: ", + idsSorteados[k]);
+            }
+
+            console.log("6 inserções simuladas concluídas para esta leitura.");
         }
 
     });
